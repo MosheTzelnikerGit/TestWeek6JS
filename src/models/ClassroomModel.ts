@@ -1,4 +1,6 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
+import { Student } from "../models/StudentModel.js"; // ודא שהמודל קיים
+
 
 interface IClassroom extends Document {
     name: string;
