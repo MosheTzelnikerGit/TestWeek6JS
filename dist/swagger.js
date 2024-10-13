@@ -8,9 +8,9 @@ const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swaggerDefintion = {
     openapi: '3.0.0',
     info: {
-        title: "blog app",
+        title: "Test Week 5JS",
         version: '1.0.0',
-        description: 'this is the description of the blog app'
+        description: 'this is the description of the Test Week 5JS'
     },
     servers: [
         {

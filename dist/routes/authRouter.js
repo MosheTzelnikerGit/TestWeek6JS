@@ -8,24 +8,58 @@ const authController_js_1 = require("../controllers/authController.js");
 const router = express_1.default.Router();
 /**
  * @swagger
- * /registerTeacher:
- *   post:
- *     summary: Register a new teacher
- *     description: Register a teacher with name, email, password, and classroom.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Teacher'
- *     responses:
- *       201:
- *         description: Teacher created successfully
- *       400:
- *         description: Bad request (e.g., missing required fields or invalid input)
- *       500:
- *         description: Server error
+ * /api/auth/registerTeacher:
+ *  post:
+ *      summary: register Teacher
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          name:
+ *                             type: string
+ *                          email:
+ *                              type: string
+ *                          password:
+ *                              type: string
+ *                          className:
+ *                              type: string
+ *
+ *
+ *      responses:
+ *          201:
+ *              description: register Teacher
+ *
  */
 router.post("/registerTeacher", authController_js_1.registerTeacher);
+/**
+ * @swagger
+ * /api/auth/registerStudent:
+ *  post:
+ *      summary: register Student
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          name:
+ *                             type: string
+ *                          email:
+ *                              type: string
+ *                          password:
+ *                              type: string
+ *                          className:
+ *                              type: string
+ *
+ *
+ *      responses:
+ *          201:
+ *              description: register Student
+ *
+ */
 router.post("/registerStudent", authController_js_1.registerStudent);
 exports.default = router;
