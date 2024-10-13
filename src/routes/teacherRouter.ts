@@ -1,13 +1,10 @@
 import { Router } from "express";
-// import { registerTeacher, getTeachers } from "../controllers/teacherController";
+import { addGrade, updateGrade, getClassGrades } from "../controllers/teacherController";
 
-const teacherRouter = Router();
+const router = Router();
 
-// teacherRouter.post("/register", registerTeacher); // רישום מורה עם כיתה חדשה
-// teacherRouter.get("/", getTeachers); // קבלת רשימת מורים
+router.post("/addGrade", addGrade);
+router.post("/updateGrade", updateGrade);
+router.get("/", getClassGrades); 
 
-// gradeRouter.put("/:studentId/:gradeId", updateGrade); // עדכון ציון
-// gradeRouter.get("/student/:studentId", getStudentGrades); // ציונים של תלמיד
-// gradeRouter.get("/class/:classId", getClassGrades); // ציונים של כיתה
-
-export default teacherRouter;
+export default router;

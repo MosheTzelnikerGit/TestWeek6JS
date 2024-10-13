@@ -1,9 +1,8 @@
-// import { Router } from "express";
-// import { registerStudent, getStudents } from "../controllers/studentController";
+import { Router } from "express";
+import { getStudentGrades } from "../controllers/StudentController.js";
 
-// const studentRouter = Router();
+const router = Router();
 
-// studentRouter.post("/register", registerStudent); // רישום תלמיד לכיתה
-// studentRouter.get("/", getStudents); // קבלת רשימת תלמידים
+router.get("/getStudentGrades", getStudentGrades); 
 
-// export default studentRouter;
+export default router;
