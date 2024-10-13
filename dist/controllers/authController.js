@@ -85,30 +85,21 @@ exports.registerStudent = registerStudent;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
-        // חיפוש המשתמש לפי המייל
-        const user = (yield TeacherModel_js_1.Teacher.findOne({ email })) || (yield StudentModel_js_1.Student.findOne({ email }));
-        // אם המשתמש לא נמצא או הסיסמה לא נכונה
-        if (!user || user.password !== password) {
-            res.status(401).json({ error: "Invalid email or password" });
+        let user = yield StudentModel_js_1.Student.findOne({ email });
+        if (!user) {
+            user = yield TeacherModel_js_1.Teacher.findOne({ email });
+        }
+        if (!user) {
+            res.status(404).json({ error: "User not found" });
             return;
         }
-        // יצירת טוקן על פי תפקיד המשתמש
-        const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-        // הגדרת קוקיז
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            maxAge: 3600000, // 1 שעה
-        });
-        // מתן הרשאות שונות לפי תפקיד המשתמש
-        if (user._id === "student") {
-            res.status(200).json({ message: "Login successful, you can view grades." });
-            console.log("JWT_SECRET:", process.env.JWT_SECRET);
+        if (user.password !== password) {
+            res.status(401).json({ error: "Invalid password" });
+            return;
         }
-        else if (user._id === "teacher") {
-            res.status(200).json({ message: "Login successful, you can manage grades." });
-            console.log("JWT_SECRET:", process.env.JWT_SECRET);
-        }
+        const token = jsonwebtoken_1.default.sign({ _id: user._id, email: user.email, roll: user.roll }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        res.cookie("token", token, { maxAge: 600000 });
+        res.status(200).json({ token: token, success: true });
     }
     catch (error) {
         console.error(error);
@@ -116,3 +107,34 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.login = login;
+//   export const login = async (req: Request, res: Response): Promise<void> => {
+//     try {
+//       const { email, password } = req.body;
+//       // חיפוש המשתמש לפי המייל
+//       const user = await Teacher.findOne({ email }) || await Student.findOne({ email });
+//       // אם המשתמש לא נמצא או הסיסמה לא נכונה
+//       if (!user || user.password !== password) {
+//         res.status(401).json({ error: "Invalid email or password" });
+//         return;
+//       }
+//       // יצירת טוקן על פי תפקיד המשתמש
+//       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET!, { expiresIn: "1h" });
+//       // הגדרת קוקיז
+//       res.cookie("token", token, {
+//         httpOnly: true,
+//         secure: process.env.NODE_ENV === "production",
+//         maxAge: 3600000, // 1 שעה
+//       });
+//       // מתן הרשאות שונות לפי תפקיד המשתמש
+//       if (user._id === "student") {
+//         res.status(200).json({ message: "Login successful, you can view grades." });
+//         console.log("JWT_SECRET:", process.env.JWT_SECRET);
+//       } else if (user._id === "teacher") {
+//         res.status(200).json({ message: "Login successful, you can manage grades." });
+//         console.log("JWT_SECRET:", process.env.JWT_SECRET);
+//       }
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ error: error || "An error occurred" });
+//     }
+//   };

@@ -62,5 +62,29 @@ router.post("/registerTeacher", authController_js_1.registerTeacher);
  *
  */
 router.post("/registerStudent", authController_js_1.registerStudent);
-router.get("/login", authController_js_1.login);
+/**
+ * @swagger
+ * /api/auth/login:
+ *  post:
+ *      summary: register Teacher
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          email:
+ *                              type: string
+ *                          password:
+ *                              type: string
+ *
+ *
+ *
+ *      responses:
+ *          201:
+ *              description: register Teacher
+ *
+ */
+router.post("/login", authController_js_1.login);
 exports.default = router;

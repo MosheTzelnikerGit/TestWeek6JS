@@ -7,10 +7,12 @@ interface IStudent extends Document {
   password: string;
   classroom: mongoose.Types.ObjectId; 
   grades: { score: number; comment: string }[];
+  roll: "student";
 }
 
 const studentSchema = new Schema<IStudent>({
   name: { type: String, required: true },
+  
   email: { 
     type: String, 
     required: true, 

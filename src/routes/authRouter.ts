@@ -67,9 +67,32 @@ router.post("/registerTeacher", registerTeacher);
 
 router.post("/registerStudent", registerStudent);
 
+/**
+ * @swagger
+ * /api/auth/login:
+ *  post:
+ *      summary: register Teacher
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          email:
+ *                              type: string
+ *                          password:
+ *                              type: string
+ *                        
+ * 
+ * 
+ *      responses:
+ *          201:
+ *              description: register Teacher
+ * 
+ */
 
-
-router.get("/login", login);
+router.post("/login", login);
 
 
 

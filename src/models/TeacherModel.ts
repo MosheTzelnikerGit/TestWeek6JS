@@ -6,6 +6,7 @@ interface ITeacher extends Document {
   email: string;
   password: string;
   classroom: mongoose.Types.ObjectId; 
+  roll: "teacher";
 }
 
 const teacherSchema = new Schema<ITeacher>({
