@@ -1,5 +1,5 @@
 import express from "express";
-import { registerTeacher ,registerStudent} from "../controllers/authController.js";
+import { registerTeacher ,registerStudent, login} from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -66,5 +66,11 @@ router.post("/registerTeacher", registerTeacher);
  */
 
 router.post("/registerStudent", registerStudent);
+
+
+
+router.get("/login", login);
+
+
 
 export default router;

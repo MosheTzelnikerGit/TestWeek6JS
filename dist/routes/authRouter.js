@@ -62,4 +62,5 @@ router.post("/registerTeacher", authController_js_1.registerTeacher);
  *
  */
 router.post("/registerStudent", authController_js_1.registerStudent);
+router.get("/login", authController_js_1.login);
 exports.default = router;
