@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerTeacher = void 0;
+exports.registerStudent = exports.registerTeacher = void 0;
 const TeacherModel_js_1 = require("../models/TeacherModel.js");
 const ClassroomModel_js_1 = require("../models/ClassroomModel.js");
+const StudentModel_js_1 = require("../models/StudentModel.js");
 const registerTeacher = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, email, password, className } = req.body;
@@ -44,3 +45,34 @@ const registerTeacher = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.registerTeacher = registerTeacher;
+const registerStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        const { name, email, password, className } = req.body;
+        const existingStudent = yield StudentModel_js_1.Student.findOne({ email });
+        if ((existingStudent === null || existingStudent === void 0 ? void 0 : existingStudent.email) === email) {
+            res.status(400).json({ error: "Student is already registered" });
+            return;
+        }
+        const classroom = yield ClassroomModel_js_1.Classroom.findOne({ name: className });
+        if (!classroom) {
+            res.status(404).json({ error: "Classroom not found" });
+            return;
+        }
+        const newStudent = new StudentModel_js_1.Student({
+            name,
+            email,
+            password,
+            classroom: classroom._id,
+        });
+        yield newStudent.save();
+        (_a = classroom.students) === null || _a === void 0 ? void 0 : _a.push(newStudent._id);
+        yield classroom.save();
+        res.status(201).json({ message: "Student registered successfully" });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error || "An error occurred" });
+    }
+});
+exports.registerStudent = registerStudent;
