@@ -1,8 +1,9 @@
-import { Router } from "express";
+import express from "express";
 import { registerTeacher } from "../controllers/authController.js";
 
-const authRouter = Router();
+const router = express.Router();
 
-authRouter.post("/register", registerTeacher);
+// רישום ה-Route
+router.post("/register", registerTeacher);
 
-export default authRouter;
+export default router;

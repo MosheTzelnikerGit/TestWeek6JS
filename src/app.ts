@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 // import postRouter from "./routes/postRoutes";
-import userRouter from "./routes/userRoutes";
+// import userRouter from "./routes/userRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 import connectDB from "./config/db";
 import swaggerUi from 'swagger-ui-express';

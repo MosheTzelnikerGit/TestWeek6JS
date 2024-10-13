@@ -1,26 +1,36 @@
-import userModel from "../models/userModel.js";
-import {Teacher} from "../models/TeacherModel.js";
-import e, { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import { IUser, IGrade } from '../models/userModel.js';
-import { errorHandler } from '../middleware/errorHandler.js';
+import mongoose, { Types } from "mongoose";
+import { Request, Response, NextFunction } from "express";
+import { Teacher } from "../models/TeacherModel.js";
 import { Classroom } from "../models/ClassroomModel.js";
 
-dotenv.config();
-export const registerTeacher = async (req: Request, res: Response) => {
-    const teacher = req.body;
+export const registerTeacher = async (req: Request, res: Response): Promise<void> => {
     try {
-        const classroom = await Classroom.findOne({ name: teacher.classroom });
-        if (!classroom) {
-            const newTeacher = await Teacher.create(teacher);
-            const newClassroom = await Classroom.create({ name: teacher.classroom , teacher: newTeacher._id });
-            res.status(201).json(newClassroom);
-        } else {
-            res.status(409).json({ message: "Classroom already exists" });
-        }   
-    } catch (error: any) {
-        res.status(409).json({ message: error.message });
+      const { name, email, password, className } = req.body;
+      const existingTeacher = await Teacher.findOne({ email });
+      if (existingTeacher) {
+        res.status(400).json({ error: "Teacher already has a classroom assigned" });
+        return;
+      }
+      const existingClassroom = await Classroom.findOne({ name: className });
+      if (existingClassroom) {
+        res.status(400).json({ error: "Classroom with this name already exists" });
+        return;
+      }
+      const newClass = new Classroom({ name: className });
+      await newClass.save(); 
+      const newTeacher = new Teacher({
+        name,
+        email,
+        password,
+        classroom: newClass._id,
+      });
+      await newTeacher.save(); 
+      newClass.teacher = newTeacher._id as Types.ObjectId;
+      await newClass.save();
+  
+      res.status(201).json({ classId: newClass._id });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: error });
     }
-};
- 
+  }

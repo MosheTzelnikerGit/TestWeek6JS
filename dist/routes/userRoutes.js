@@ -1,8 +1,7 @@
+"use strict";
 // import { Router } from "express";
 // import { createUser, getUser, getUsers } from "../controllers/userController";
-
 // const userRouter = Router();
-
 // /**
 //  * @swagger
 //  * /api/users:
@@ -39,7 +38,6 @@
 //  *         description: Bad request
 //  */
 // userRouter.post("/", createUser);
-
 // /**
 //  * @swagger
 //  * /api/users:
@@ -50,7 +48,6 @@
 //  *              description: A JSON of all the users
 //  */
 // userRouter.get("/", getUsers);
-
 // /**
 //  * @swagger
 //  * /api/users/{username}:
@@ -70,5 +67,4 @@
 //  *         description: User not found
 //  */
 // userRouter.get("/:username", getUser);
-
 // export default userRouter;
