@@ -25,4 +25,4 @@ const teacherSchema = new Schema<ITeacher>({
   classroom: { type: Schema.Types.ObjectId, ref: 'Classroom', required: true },
 });
 
-export const Teacher = mongoose.model<ITeacher>('Teacher', teacherSchema);
+export const Teacher = mongoose.model<ITeacher>('Teacher',teacherSchema);
